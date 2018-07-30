@@ -19,16 +19,16 @@ class AiGymEnv(gym.Env):
 
     def __init__(self):
         # 每走一步获得的分数,分别代表四周无墙，1面墙，2面墙，3面墙，4面墙的情况
-        self.stepScore = [1, 3, 5, 8, 16]
+        self.stepScore = [1, 5, 10, 15, 20]
         # 每砍敌人一刀的分数,分别代表砍一刀，两刀，三刀和四刀
         self.hurtCount = 0;
-        self.hurtScore = [10, 15, 20, 30];
+        self.hurtScore = [30, 35, 40, 45];
         # 捡到宝物的分数,分别代表当前已经有刀(盾)和无刀(盾)的奖励
-        self.swordScore = [0, 15];
-        self.shieldScore = [0, 10];
+        self.swordScore = [0, 20];
+        self.shieldScore = [0, 15];
         # stop条件,该条件应该和安全区范围有关，一种是满足该分数条件，然后开始寻找一个有墙保护的位置，>=一面墙就可以停止了
-        self.stopThresholdBase = 40
-        self.stopThreshold = 40 * 12 / 12;
+        self.stopThresholdBase = 72
+        self.stopThreshold = 72 * 12 / 12;
 
         self.tau = 0.02  # seconds between state updates
 

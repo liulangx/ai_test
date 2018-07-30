@@ -17,11 +17,11 @@ env = AiGymEnv()
 env.reset()
 
 goal_steps = 1000
-score_requirement = 24
-initial_games = 50000000
+score_requirement = 50
+initial_games = 100000000
 roundDisp = 10000
-batch_size = 512
-train_times = 20
+batch_size = 5120
+train_times = 10000
 gpu_options = tf.GPUOptions(allow_growth=True)
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -100,7 +100,7 @@ def neural_network_model(input_size):
     hidden_layer3 = add_layer(hidden_layer2, 256, 512, activation_function=tf.sigmoid)
     hidden_layer4 = add_layer(hidden_layer3, 512, 256, activation_function=tf.sigmoid)
     hidden_layer5 = add_layer(hidden_layer4, 256, 128, activation_function=tf.sigmoid)
-    output_layer = add_layer(hidden_layer5, 128, 2, activation_function=tf.nn.softmax) # tf.nn.relu
+    output_layer = add_layer(hidden_layer5, 128, outputSize, activation_function=tf.nn.softmax) # tf.nn.relu
     loss = tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=output_layer)
     loss = tf.reduce_mean(loss)
     optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.2).minimize(loss)
@@ -132,4 +132,5 @@ def train_model(training_data, model = False):
         else:
             saver.restore(sess, './model.ckpt')
 training_data = initial_population()
+# training_data = np.load('saved.npy')
 train_model(training_data)
